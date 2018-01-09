@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Controle de vendas</title>
+    <meta charset="utf-8"/>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/photon.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+
+  <body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <h1 class="title">Loja XYZ</h1>
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                  <button class="btn btn-default">
+                    <span class="icon icon-home"></span>
+                  </button>
+                  <button class="btn btn-default">
+                    <span class="icon icon-folder"></span>
+                  </button>
+                  <button class="btn btn-default active">
+                    <span class="icon icon-cloud"></span>
+                  </button>
+                  <button class="btn btn-default">
+                    <span class="icon icon-popup"></span>
+                  </button>
+                  <button class="btn btn-default">
+                    <span class="icon icon-shuffle"></span>
+                  </button>
+                </div>
+            
+                <button class="btn btn-default">
+                  <span class="icon icon-home icon-text"></span>
+                  Filters
+                </button>
+            
+                <button class="btn btn-default btn-dropdown pull-right">
+                  <span class="icon icon-megaphone"></span>
+                </button>
+              </div>
+          </header>
+      <div class="window-content">
+        <div class="pane-group">
+          <div class="pane-sm sidebar"><p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito chapeo diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos tao. Ao joao vejo maco va haja faca um. Da tu as eivado pensou vereda.</p></div>
+          <div class="pane">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                      <th>Nome</th>
+                      <th>CPF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="app">
+                    <td v-for="cliente in clientes" >
+                      {{cliente.nome}}
+                    </td>
+                    <td v-for="cliente in clientes" >
+                        {{cliente.cpf}}
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+      <footer class="toolbar toolbar-footer">
+          <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
+        </footer>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    var read = require('read-file-utf8')
+    var loki = require('lokijs');
+    var db = new loki('db.json');
+    var data = read(__dirname+'/db.json');
+    db.loadJSON(data);
+    window.vue = require('vue');
+    // db.loadJSON()
+    var clientes = db.getCollection('clientes');
+    console.log(db);
+    new Vue({
+      el: '#app',
+      data: {
+        clientes: []
+      },
+      mounted: function(){
+        this.clientes = clientes.data;
+        console.log(this.clientes);
+      }
+    })
+  </script>
+</html>
